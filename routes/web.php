@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Home;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', 'auth/login');
+
+Route::middleware(['auth', 'verified'])->group(fn () => Route::get('/home', Home::class)->name('home'));
+
+include __DIR__.'/auth.php';
+include __DIR__.'/my.php';
